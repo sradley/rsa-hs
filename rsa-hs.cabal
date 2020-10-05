@@ -1,0 +1,27 @@
+cabal-version:       >=1.10
+
+name:                rsa-hs
+version:             0.1.0.0
+-- description:
+license:             MIT
+license-file:        LICENSE
+author:              sradley
+maintainer:          stephen.t.radley@protonmail.com
+copyright:           2020 Stephen Radley
+build-type:          Simple
+
+library
+  exposed-modules:     Rsa
+  ghc-options:         -Wall -O2
+  build-depends:       base >=4.14 && <4.15
+                     , bytestring
+                     , random
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+
+executable rsa-hs
+  main-is:             Main.hs
+  build-depends:       base >=4.14 && <4.15
+                     , rsa-hs
+  hs-source-dirs:      app
+  default-language:    Haskell2010
