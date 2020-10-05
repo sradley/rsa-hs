@@ -12,16 +12,8 @@ build-type:          Simple
 
 library
   exposed-modules:     Rsa
-  ghc-options:         -Wall -O2
   build-depends:       base >=4.14 && <4.15
                      , bytestring
                      , random
   hs-source-dirs:      src
-  default-language:    Haskell2010
-
-executable rsa-hs
-  main-is:             Main.hs
-  build-depends:       base >=4.14 && <4.15
-                     , rsa-hs
-  hs-source-dirs:      app
   default-language:    Haskell2010
