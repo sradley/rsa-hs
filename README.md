@@ -1,4 +1,5 @@
 # RSA in Haskell
+An implementation of the RSA cryptosystem in Haskell.
 
 ## Generating Keys
 ```
