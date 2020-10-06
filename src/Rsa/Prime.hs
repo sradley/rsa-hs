@@ -18,8 +18,23 @@ genPrime n = genPrime' (getRandGen n)
 isPrime :: Int -> Integer -> IO Bool
 isPrime _ 2 = pure True
 isPrime k n
+    | divPrime n                = pure False   -- if divisible by small primes
     | powMod 210 (n - 1) n /= 1 = pure False   -- base-210 fermat test
     | otherwise                 = isPrime' k n -- miller-rabin primality test
+
+primes :: [Integer]
+primes = sieve [2..5000]
+
+sieve :: [Integer] -> [Integer]
+sieve [] = []
+sieve (p:xs) = p:sieve [x | x <- xs, x `mod` p > 0]
+
+divPrime :: Integer -> Bool
+divPrime n = divPrime' n (length primes - 1)
+    where
+        divPrime' _ 0 = False
+        divPrime' n' i | n' `mod` (primes !! i) == 0 = True 
+                       | otherwise                   = divPrime' n (i-1)
 
 isPrime' :: Int -> Integer -> IO Bool 
 isPrime' k n = getStdGen >>= pure . and . primeList k n d r

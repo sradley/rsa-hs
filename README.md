@@ -6,19 +6,19 @@ An implementation of the RSA cryptosystem in Haskell.
 ### Generating 1024-bit Keys
 ```
 $ time cabal exec rsa-hs
-cabal exec rsa-hs  0.39s user 0.10s system 99% cpu 0.496 total
+cabal exec rsa-hs  0.18s user 0.05s system 96% cpu 0.247 total
 ```
 
 ### Generating 2048-bit Keys
 ```
 $ time cabal exec rsa-hs
-cabal exec rsa-hs  2.06s user 0.13s system 99% cpu 2.193 total
+cabal exec rsa-hs  1.80s user 0.33s system 99% cpu 2.136 total
 ```
 
 ### Generating 4096-bit Keys
 ```
 $ time cabal exec rsa-hs
-cabal exec rsa-hs  47.23s user 0.48s system 99% cpu 47.786 total
+cabal exec rsa-hs  6.12s user 0.29s system 99% cpu 6.416 total
 ```
 
 ## Usage
