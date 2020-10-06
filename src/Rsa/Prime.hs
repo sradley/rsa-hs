@@ -10,9 +10,9 @@ import System.Random (StdGen, getStdGen, randomR)
 genPrime :: Int -> IO Integer 
 genPrime n = genPrime' (getRandGen n)
     where
-        genPrime' g = do n <- randInt g
-                         prime <- isPrime k n
-                         if prime then pure n else genPrime' g
+        genPrime' g = do n' <- randInt g
+                         prime <- isPrime k n'
+                         if prime then pure n' else genPrime' g
         k = max (2556 `div` n) 2 -- calculate k for an error rate of 2^(-80)
 
 isPrime :: Int -> Integer -> IO Bool
@@ -48,7 +48,7 @@ primeTest :: Integer -> Integer -> Integer -> Bool
 primeTest x n r = let x' = powMod x 2 n
                   in primeTest' x' n r
     where
-        primeTest' x n r | x == n - 1       = True
-                         | x == 1 || r == 1 = False
-                         | otherwise        = primeTest x n (r - 1)
+        primeTest' x' n' r' | x' == n' - 1       = True
+                            | x' == 1 || r' == 1 = False
+                            | otherwise          = primeTest x n (r - 1)
 

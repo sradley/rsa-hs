@@ -7,12 +7,8 @@ module Rsa
 , extract
 ) where
 
-import Rsa.Random
 import Rsa.Prime
 import Rsa.Util
-
-import qualified Data.ByteString.Lazy as BS
-import           System.Random        (StdGen, getStdGen, randomR)
 
 -- |Stores the components of an RSA public/private key.
 data Key = 

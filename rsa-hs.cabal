@@ -15,6 +15,7 @@ library
                      , Rsa.Random
                      , Rsa.Prime
                      , Rsa.Util
+  ghc-options:         -Wall -O2
   build-depends:       base >=4.14 && <4.15
                      , bytestring
                      , random
