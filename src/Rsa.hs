@@ -20,10 +20,10 @@ data Key =
 generate :: Int -> IO Key
 generate x = do p <- genPrime x
                 q <- genPrime x 
-                let d = maybe 0 (\d' -> d') $ modInv 65537 (phi p q)
-                pure $ Private d (n p q) 65537 
+                pure $ Private (d p q) (n p q) 65537 
     where n p q   = p*q
           phi p q = lcm (p - 1) (q - 1)
+          d p q   = maybe 0 (\y -> y) $ modInv 65537 (phi p q)
 
 -- |Extracts a public key from a private key.
 extract :: Key -> Key
