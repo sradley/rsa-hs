@@ -26,13 +26,13 @@ cabal exec rsa-hs  6.12s user 0.29s system 99% cpu 6.416 total
 ### Generating Keys
 ```
 -- |Generates an n-bit RSA key.
-generate :: Int -> IO Key
+genKey :: Int -> IO Key
 ```
 
 ### Extracting Public Keys
 ```
 -- |Extracts a public key from a private key.
-extract :: Key -> Key
+extKey :: Key -> Key
 ```
 
 ### Encryption
