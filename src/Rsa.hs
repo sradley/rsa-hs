@@ -3,8 +3,8 @@ module Rsa
 ( Key (..)
 , encrypt
 , decrypt
-, generate
-, extract
+, genKey
+, extKey
 ) where
 
 import Rsa.Prime
@@ -17,18 +17,17 @@ data Key =
     deriving (Show)
 
 -- |Generates an n-bit RSA key.
-generate :: Int -> IO Key
-generate x = do p <- genPrime x
-                q <- genPrime x 
-                pure $ Private (d p q) (n p q) 65537 
-    where n p q   = p*q
-          phi p q = lcm (p - 1) (q - 1)
-          d p q   = maybe 0 (\y -> y) $ modInv 65537 (phi p q)
+genKey :: Int -> IO Key
+genKey x = (,) <$> genPrime x
+               <*> genPrime x >>= pure . (\pq -> Private (d pq) (n pq) 65537)
+    where n (p, q)   = p*q
+          phi (p, q) = lcm (p - 1) (q - 1)
+          d (p, q)   = maybe 0 (\y -> y) $ modInv 65537 (phi (p, q))
 
 -- |Extracts a public key from a private key.
-extract :: Key -> Key
-extract (Public n e)    = Public n e
-extract (Private _ n e) = Public n e
+extKey :: Key -> Key
+extKey (Public n e)    = Public n e
+extKey (Private _ n e) = Public n e
 
 -- |Encrypt under RSA given a public or private key.
 encrypt :: Key -> Integer -> Integer

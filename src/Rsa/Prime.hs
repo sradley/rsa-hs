@@ -30,11 +30,7 @@ sieve [] = []
 sieve (p:xs) = p:sieve [x | x <- xs, x `mod` p > 0]
 
 divPrime :: Integer -> Bool
-divPrime n = divPrime' n (length primes - 1)
-    where
-        divPrime' _ 0 = False
-        divPrime' n' i | n' `mod` (primes !! i) == 0 = True 
-                       | otherwise                   = divPrime' n (i-1)
+divPrime n = (length . filter (== 0) . map (n `mod`)) primes > 0
 
 isPrime' :: Int -> Integer -> IO Bool 
 isPrime' k n = getStdGen >>= pure . and . primeList k n d r
