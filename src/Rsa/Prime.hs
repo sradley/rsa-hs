@@ -8,7 +8,7 @@ import System.Random (StdGen, getStdGen, randomR)
 
 -- |Generates a cryptographically secure prime number of size n-bits.
 genPrime :: Int -> IO Integer 
-genPrime n = genPrime' (getRandGen n)
+genPrime n = (getCryptoGen n) >>= genPrime'
     where
         genPrime' g = do n' <- randInt g
                          prime <- isPrime k n'

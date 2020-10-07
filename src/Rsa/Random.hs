@@ -1,6 +1,6 @@
 module Rsa.Random
-( RandGen (..)
-, getRandGen
+( CryptoGen (..)
+, getCryptoGen
 , randInt
 ) where
 
@@ -10,18 +10,19 @@ import qualified Data.ByteString     as BS
 import           Data.Bits
 
 -- |...
-data RandGen = RandGen Int (IO Handle)
+data CryptoGen = CryptoGen Int Handle
 
 -- | Initialises a new random number generator.
-getRandGen :: Int -> RandGen
-getRandGen n = RandGen (n `div` 8) (openFile "/dev/urandom" ReadMode)
+getCryptoGen :: Int -> IO CryptoGen
+getCryptoGen n =
+    openFile "/dev/urandom" ReadMode >>= pure . CryptoGen (n `div` 8)
 
 -- |Generates a cryptographically secure random integer of size n-bits.
-randInt :: RandGen -> IO Integer
+randInt :: CryptoGen -> IO Integer
 randInt g = randBytes g >>= pure . (.|. 1) . bytesToInt . setFirstBit
 
-randBytes :: RandGen -> IO [Integer]
-randBytes (RandGen n h) = h >>= (\x -> BS.hGet x n) >>= pure . mapToInt 
+randBytes :: CryptoGen -> IO [Integer]
+randBytes (CryptoGen n h) = BS.hGet h n >>= pure . mapToInt 
     where
         mapToInt xs = map fromIntegral $ BS.unpack xs
 
